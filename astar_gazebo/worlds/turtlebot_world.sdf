@@ -1,0 +1,480 @@
+<?xml version="1.0" ?>
+
+<sdf version="1.8">
+
+  <world name="demo">
+
+    <!-- ========================= -->
+    <!-- PHYSICS -->
+    <!-- ========================= -->
+
+    <physics name="1ms" type="ignored">
+      <max_step_size>0.001</max_step_size>
+      <real_time_factor>1.0</real_time_factor>
+    </physics>
+
+    <plugin
+      filename="libignition-gazebo-physics-system.so"
+      name="ignition::gazebo::systems::Physics">
+    </plugin>
+
+    <plugin
+      filename="libignition-gazebo-user-commands-system.so"
+      name="ignition::gazebo::systems::UserCommands">
+    </plugin>
+
+    <plugin
+      filename="libignition-gazebo-scene-broadcaster-system.so"
+      name="ignition::gazebo::systems::SceneBroadcaster">
+    </plugin>
+    <plugin
+        filename="libignition-gazebo-sensors-system.so"
+        name="ignition::gazebo::systems::Sensors">
+        <render_engine>ogre2</render_engine>
+    </plugin>
+
+    <plugin
+        filename="libignition-gazebo-imu-system.so"
+        name="ignition::gazebo::systems::Imu">
+    </plugin>
+
+
+    <!-- ========================= -->
+    <!-- SCENE -->
+    <!-- ========================= -->
+
+    <scene>
+      <ambient>0.35 0.35 0.35 1</ambient>
+      <background>0.12 0.12 0.14 1</background>
+      <shadows>true</shadows>
+    </scene>
+
+
+    <!-- ========================= -->
+    <!-- LIGHTING -->
+    <!-- ========================= -->
+
+    <light type="point" name="warehouse_light_1">
+      <pose>0 0 5 0 0 0</pose>
+
+      <diffuse>0.75 0.75 0.75 1</diffuse>
+      <specular>0.15 0.15 0.15 1</specular>
+
+      <attenuation>
+        <range>15</range>
+        <constant>0.8</constant>
+        <linear>0.02</linear>
+        <quadratic>0.001</quadratic>
+      </attenuation>
+    </light>
+
+
+    <light type="point" name="warehouse_light_2">
+      <pose>2 2 4 0 0 0</pose>
+
+      <diffuse>0.65 0.65 0.65 1</diffuse>
+      <specular>0.10 0.10 0.10 1</specular>
+
+      <attenuation>
+        <range>10</range>
+        <constant>0.8</constant>
+        <linear>0.02</linear>
+        <quadratic>0.001</quadratic>
+      </attenuation>
+    </light>
+
+
+    <light type="point" name="warehouse_light_3">
+      <pose>-2 -2 4 0 0 0</pose>
+
+      <diffuse>0.65 0.65 0.65 1</diffuse>
+      <specular>0.10 0.10 0.10 1</specular>
+
+      <attenuation>
+        <range>10</range>
+        <constant>0.8</constant>
+        <linear>0.02</linear>
+        <quadratic>0.001</quadratic>
+      </attenuation>
+    </light>
+
+
+    <!-- ========================= -->
+    <!-- FLOOR -->
+    <!-- ========================= -->
+
+    <model name="floor">
+
+      <static>true</static>
+
+      <link name="link">
+
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>5 5 0.1</size>
+            </box>
+          </geometry>
+        </collision>
+
+        <visual name="visual">
+
+          <geometry>
+            <box>
+              <size>5 5 0.1</size>
+            </box>
+          </geometry>
+
+          <material>
+            <ambient>0.28 0.28 0.30 1</ambient>
+            <diffuse>0.38 0.38 0.40 1</diffuse>
+            <specular>0.08 0.08 0.08 1</specular>
+          </material>
+
+        </visual>
+
+      </link>
+
+    </model>
+
+
+    <!-- ================================================= -->
+    <!-- OUTER MAZE WALLS -->
+    <!-- ================================================= -->
+
+
+    <!-- LEFT WALL -->
+    <model name="wall_left">
+
+      <static>true</static>
+
+      <!-- spans y = -0.25 to 1.75 -->
+      <pose>-0.75 0.75 0.15 0 0 1.5708</pose>
+
+      <link name="link">
+
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>2.0 0.06 0.20</size>
+            </box>
+          </geometry>
+        </collision>
+
+        <visual name="visual">
+
+          <geometry>
+            <box>
+              <size>2.0 0.06 0.20</size>
+            </box>
+          </geometry>
+
+          <material>
+            <ambient>0.06 0.06 0.07 1</ambient>
+            <diffuse>0.10 0.10 0.12 1</diffuse>
+            <specular>0.18 0.18 0.18 1</specular>
+          </material>
+
+        </visual>
+
+      </link>
+
+    </model>
+
+
+    <!-- RIGHT WALL -->
+    <model name="wall_right">
+
+      <static>true</static>
+
+      <!-- spans y = -0.25 to 1.75 -->
+      <pose>0.75 0.75 0.15 0 0 1.5708</pose>
+
+      <link name="link">
+
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>2.0 0.06 0.20</size>
+            </box>
+          </geometry>
+        </collision>
+
+        <visual name="visual">
+
+          <geometry>
+            <box>
+              <size>2.0 0.06 0.20</size>
+            </box>
+          </geometry>
+
+          <material>
+            <ambient>0.06 0.06 0.07 1</ambient>
+            <diffuse>0.10 0.10 0.12 1</diffuse>
+            <specular>0.18 0.18 0.18 1</specular>
+          </material>
+
+        </visual>
+
+      </link>
+
+    </model>
+
+
+    <!-- BOTTOM WALL -->
+    <model name="wall_bottom">
+
+      <static>true</static>
+
+      <pose>0 -0.25 0.15 0 0 0</pose>
+
+      <link name="link">
+
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>1.5 0.06 0.20</size>
+            </box>
+          </geometry>
+        </collision>
+
+        <visual name="visual">
+
+          <geometry>
+            <box>
+              <size>1.5 0.06 0.20</size>
+            </box>
+          </geometry>
+
+          <material>
+            <ambient>0.06 0.06 0.07 1</ambient>
+            <diffuse>0.10 0.10 0.12 1</diffuse>
+            <specular>0.18 0.18 0.18 1</specular>
+          </material>
+
+        </visual>
+
+      </link>
+
+    </model>
+
+
+    <!-- TOP WALL -->
+    <model name="wall_top">
+
+      <static>true</static>
+
+      <pose>0 1.75 0.15 0 0 0</pose>
+
+      <link name="link">
+
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>1.5 0.06 0.20</size>
+            </box>
+          </geometry>
+        </collision>
+
+        <visual name="visual">
+
+          <geometry>
+            <box>
+              <size>1.5 0.06 0.20</size>
+            </box>
+          </geometry>
+
+          <material>
+            <ambient>0.06 0.06 0.07 1</ambient>
+            <diffuse>0.10 0.10 0.12 1</diffuse>
+            <specular>0.18 0.18 0.18 1</specular>
+          </material>
+
+        </visual>
+
+      </link>
+
+    </model>
+
+
+    <!-- ================================================= -->
+    <!-- INTERNAL MAZE WALLS -->
+    <!-- ================================================= -->
+
+
+    <!-- WALL 1 -->
+    <!-- Opening on RIGHT -->
+    <model name="maze_wall_1">
+
+      <static>true</static>
+
+      <!-- length 1.05 m -->
+      <!-- spans x = -0.72 to +0.33 -->
+      <pose>-0.195 0.15 0.15 0 0 0</pose>
+
+      <link name="link">
+
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>1.05 0.06 0.20</size>
+            </box>
+          </geometry>
+        </collision>
+
+        <visual name="visual">
+
+          <geometry>
+            <box>
+              <size>1.05 0.06 0.20</size>
+            </box>
+          </geometry>
+
+          <material>
+            <ambient>0.06 0.06 0.07 1</ambient>
+            <diffuse>0.10 0.10 0.12 1</diffuse>
+            <specular>0.18 0.18 0.18 1</specular>
+          </material>
+
+        </visual>
+
+      </link>
+
+    </model>
+
+
+    <!-- WALL 2 -->
+    <!-- Opening on LEFT -->
+    <model name="maze_wall_2">
+
+      <static>true</static>
+
+      <!-- spans x = -0.33 to +0.72 -->
+      <pose>0.195 0.55 0.15 0 0 0</pose>
+
+      <link name="link">
+
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>1.05 0.06 0.20</size>
+            </box>
+          </geometry>
+        </collision>
+
+        <visual name="visual">
+
+          <geometry>
+            <box>
+              <size>1.05 0.06 0.20</size>
+            </box>
+          </geometry>
+
+          <material>
+            <ambient>0.06 0.06 0.07 1</ambient>
+            <diffuse>0.10 0.10 0.12 1</diffuse>
+            <specular>0.18 0.18 0.18 1</specular>
+          </material>
+
+        </visual>
+
+      </link>
+
+    </model>
+
+
+    <!-- WALL 3 -->
+    <!-- Opening on RIGHT -->
+    <model name="maze_wall_3">
+
+      <static>true</static>
+
+      <pose>-0.195 0.95 0.15 0 0 0</pose>
+
+      <link name="link">
+
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>1.05 0.06 0.20</size>
+            </box>
+          </geometry>
+        </collision>
+
+        <visual name="visual">
+
+          <geometry>
+            <box>
+              <size>1.05 0.06 0.20</size>
+            </box>
+          </geometry>
+
+          <material>
+            <ambient>0.06 0.06 0.07 1</ambient>
+            <diffuse>0.10 0.10 0.12 1</diffuse>
+            <specular>0.18 0.18 0.18 1</specular>
+          </material>
+
+        </visual>
+
+      </link>
+
+    </model>
+
+
+    <!-- WALL 4 -->
+    <!-- Opening on LEFT -->
+    <model name="maze_wall_4">
+
+      <static>true</static>
+
+      <pose>0.195 1.35 0.15 0 0 0</pose>
+
+      <link name="link">
+
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>1.05 0.06 0.20</size>
+            </box>
+          </geometry>
+        </collision>
+
+        <visual name="visual">
+
+          <geometry>
+            <box>
+              <size>1.05 0.06 0.20</size>
+            </box>
+          </geometry>
+
+          <material>
+            <ambient>0.06 0.06 0.07 1</ambient>
+            <diffuse>0.10 0.10 0.12 1</diffuse>
+            <specular>0.18 0.18 0.18 1</specular>
+          </material>
+
+        </visual>
+
+      </link>
+
+    </model>
+
+
+    <!-- ========================= -->
+    <!-- TURTLEBOT -->
+    <!-- ========================= -->
+
+    <include>
+
+      <uri>model://turtlebot3_burger</uri>
+
+      <!-- Start inside the first corridor -->
+      <pose>0 -0.05 0.06 0 0 0</pose>
+
+    </include>
+
+
+  </world>
+
+</sdf>
