@@ -24,7 +24,7 @@ class PathPlannerNode(Node):
         self.path_pub = self.create_publisher(Path, '/path', 10)
         self.inflated_grid_pub = self.create_publisher(OccupancyGrid, '/inflated_map', qos)
         self.add_on_set_parameters_callback(self.parameter_callback)
-        self.declare_parameter('inflation_radius', 20)
+        self.declare_parameter('inflation_radius', 10)
         self.inflation_radius = self.get_parameter('inflation_radius').value
         self.create_subscription(OccupancyGrid, '/map', self.map_callback, qos)
         self.create_subscription(PoseStamped, '/goal_pose', self.goal_callback, 10)

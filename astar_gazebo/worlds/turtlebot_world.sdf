@@ -470,7 +470,7 @@
       <uri>model://turtlebot3_burger</uri>
 
       <!-- Start inside the first corridor -->
-      <pose>0 -0.05 0.06 0 0 0</pose>
+      <pose>-0.4 -0.05 0.06 0 0 0</pose>
 
     </include>
 

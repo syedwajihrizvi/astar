@@ -15,10 +15,11 @@ class MapPublisher(Node):
             durability=DurabilityPolicy.TRANSIENT_LOCAL
         )
         self.publisher = self.create_publisher(OccupancyGrid, '/map', qos)
-        self.declare_parameter('resolution', 0.008)
+        self.declare_parameter('resolution', 0.0125)
         self.add_on_set_parameters_callback(self.parameter_callback)
         self._map_w = 5.0
         self._map_h = 5.0
+        self._wall_thickness = 0.06
         self._resolution = self.get_parameter('resolution').value
 
         self._width = int(self._map_w / self._resolution)
@@ -100,22 +101,32 @@ class MapPublisher(Node):
         msg.data[index] = 100
 
     def add_vertical_wall(self, msg, x, y_min, y_max):
-        y = y_min
+        half_t = self._wall_thickness / 2.0
 
-        while y <= y_max:
-            grid_x, grid_y = self.convert_gz_to_occupancy_grid(x, y)
-            self.set_occupied(msg, grid_x, grid_y)
+        x_min = x - half_t
+        x_max = x + half_t
 
-            y += self._resolution
+        gx_min, gy_min = self.convert_gz_to_occupancy_grid(x_min, y_min)
+        gx_max, gy_max = self.convert_gz_to_occupancy_grid(x_max, y_max)
+
+        for gy in range(gy_min, gy_max + 1):
+            for gx in range(gx_min, gx_max + 1):
+                if 0 <= gx < self._width and 0 <= gy < self._height:
+                    self.set_occupied(msg, gx, gy)
 
     def add_horizontal_wall(self, msg, y, x_min, x_max):
-        x = x_min
+        half_t = self._wall_thickness / 2.0
 
-        while x <= x_max:
-            grid_x, grid_y = self.convert_gz_to_occupancy_grid(x, y)
-            self.set_occupied(msg, grid_x, grid_y)
+        y_min = y - half_t
+        y_max = y + half_t
 
-            x += self._resolution
+        gx_min, gy_min = self.convert_gz_to_occupancy_grid(x_min, y_min)
+        gx_max, gy_max = self.convert_gz_to_occupancy_grid(x_max, y_max)
+
+        for gy in range(gy_min, gy_max + 1):
+            for gx in range(gx_min, gx_max + 1):
+                if 0 <= gx < self._width and 0 <= gy < self._height:
+                    self.set_occupied(msg, gx, gy)
 
 
 def main(args=None):
