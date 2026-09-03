@@ -73,7 +73,7 @@ class NIDNode(Node):
         distance_to_target = np.sqrt((p_xg - p_xl)**2 + (p_yg - p_yl)**2)
         if distance_to_target < self.tolerance:
             # Increment target index and update target pose
-            self.current_idx += 1
+            self.current_idx = min(self.current_idx + 4, len(self.path.poses))
             if self.current_idx < len(self.path.poses):
                 self.target_pose = self.path.poses[self.current_idx].pose
             else:

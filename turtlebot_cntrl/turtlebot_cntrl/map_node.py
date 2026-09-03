@@ -19,7 +19,7 @@ class MapPublisher(Node):
         self.add_on_set_parameters_callback(self.parameter_callback)
         self._map_w = 5.0
         self._map_h = 5.0
-        self._wall_thickness = 0.06
+        self._wall_thickness = 0.08
         self._resolution = self.get_parameter('resolution').value
 
         self._width = int(self._map_w / self._resolution)
